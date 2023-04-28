@@ -1,0 +1,25 @@
+FROM python:3.9.4-slim
+
+COPY requirements.txt requirements.txt
+
+RUN pip install -r requirements.txt
+
+COPY . /backend
+
+COPY logs /backend/logs
+
+WORKDIR /backend
+
+ENV DB_USERNAME=${DB_USERNAME}
+ENV DB_PASSWORD=${DB_PASSWORD}
+ENV KEYSPACE=${KEYSPACE}
+ENV SECRET_KEY=${SECRET_KEY}
+ENV ALGORITHM=${ALGORITHM}
+ENV EMAIL=${EMAIL}
+ENV EMAIL_PASSWORD=${EMAIL_PASSWORD}
+ENV ORIGIN=${ORIGIN}
+ENV ORIGIN2=${ORIGIN2}
+
+EXPOSE 8000
+
+CMD ["python", "db.py"]

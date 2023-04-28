@@ -19,6 +19,7 @@ services:
       - "CASSANDRA_DC=se1"
       - "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
 #    restart: always
+    container_name: node-seed
 
 
   cassandra1:
@@ -34,6 +35,7 @@ services:
     depends_on:
       - cassandra-seed
 #    restart: always
+    container_name: node-1
 
   cassandra2:
     image: cassandra:latest
@@ -48,6 +50,7 @@ services:
     depends_on:
       - cassandra-seed
 #    restart: always
+    container_name: node-2
 
 volumes:
   cassandra_data_seed:

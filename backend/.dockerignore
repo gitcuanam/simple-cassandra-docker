@@ -1,0 +1,11 @@
+.github
+tests
+env
+.gitignore
+.dockerignore
+.env
+.idea
+chi_url/.env
+chi_url/__pycache__
+chi_url/test.py
+Readme.MD
