@@ -186,3 +186,14 @@ networks:
     external:
       name: broker-net     
 ```
+
+Create virtaul environment for python3
+```bash
+virtualenv simple-cassandra-docker -p python3
+```
+
+Build backend docker image
+```
+cd backend
+docker build -t python-cassandra .
+```
