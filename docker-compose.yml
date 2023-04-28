@@ -23,6 +23,7 @@ services:
 #    ports:
 #      - "9042:9042"
     volumes:
+      - ./init_keyspace.cql:/schema.cql
       - "cassandra_data_seed:/var/lib/cassandra"
     environment:
       - "CASSANDRA_SEEDS=cassandra-seed"
@@ -32,6 +33,7 @@ services:
       - "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
 #    restart: always
     container_name: node-seed
+    # command: /bin/bash -c "sleep 60 && cqlsh -f /schema.cql -u cassandra -p cassandra"
 
 
   cassandra1:

@@ -3,6 +3,8 @@ from cassandra.cluster import Cluster
 from functools import lru_cache
 from config import Settings
 
+import logging
+
 # @lru_cache()
 # def db_cred():
 #     return Settings()
@@ -20,11 +22,19 @@ from config import Settings
 
 _CLUSTER = Cluster(contact_points=['node-seed'])
 print(_CLUSTER)
-
+# session = _CLUSTER.connect('chi_url')
+# print(session)
 # while True:
 #     try:
-#         session = _CLUSTER.connect(_keyspace)
+#         session = _CLUSTER.connect('chi_url')
 #         print('try')
+
+#         print(session)
+#         logging.basicConfig(handlers=[logging.FileHandler(filename="../logs/main.log", encoding="utf-8")], level=logging.ERROR)
+#         # user_add_stmt = session.prepare(
+#         #     "INSERT INTO user (user_name, disabled, email, hashed_password) VALUES (?, TRUE, ?, ?)")  # prepared statement to add user
+#         # session.execute(user_add_stmt,
+#         #             ['jjj', 'jjj@gmail.com', 'jjj'])  # replace the pre_stmt with the actual values
 #         break
 #     except:
 #         time.sleep(10)  # wait before reconnecting
