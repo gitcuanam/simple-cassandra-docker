@@ -2,3 +2,4 @@
 simple-cassandra-docker/
 # docker bind mount
 volumes/
+cassandra/data
