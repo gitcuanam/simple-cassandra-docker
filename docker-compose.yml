@@ -17,6 +17,8 @@ services:
     ports:
     - "8000:8000"
     restart: always
+    networks:
+      - cassandra-network
 
   cassandra-seed:
     image: cassandra:latest
@@ -31,10 +33,22 @@ services:
 #      needed for setting up custom cluster name
       - "CASSANDRA_DC=se1"
       - "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
+    networks:
+      - cassandra-network
 #    restart: always
     container_name: node-seed
     # command: /bin/bash -c "sleep 60 && cqlsh -f /schema.cql -u cassandra -p cassandra"
 
+  cassandra-load-keyspace:
+    container_name: cassandra-load-keyspace
+    image: cassandra:latest
+    depends_on:
+      - cassandra-seed
+    volumes:
+      - ./init_keyspace.cql:/schema.cql
+    networks:
+      - cassandra-network
+    command: /bin/bash -c "sleep 60 && echo loading cassandra keyspace && cqlsh cassandra-seed -f /schema.cql"
 
   cassandra1:
     image: cassandra:latest
@@ -48,6 +62,8 @@ services:
       - "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
     depends_on:
       - cassandra-seed
+    networks:
+      - cassandra-network
 #    restart: always
     container_name: node-1
 
@@ -63,6 +79,8 @@ services:
       - "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
     depends_on:
       - cassandra-seed
+    networks:
+      - cassandra-network
 #    restart: always
     container_name: node-2
 
@@ -70,3 +88,6 @@ volumes:
   cassandra_data_seed:
   cassandra_data_1:
   cassandra_data_2:
+
+networks:
+  cassandra-network:
