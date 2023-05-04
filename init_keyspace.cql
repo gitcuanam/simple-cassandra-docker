@@ -67,4 +67,4 @@ CREATE INDEX IF NOT EXISTS email ON chi_url.user (email);
 
 // CREATE ROLE IF NOT EXISTS cassandra with superuser = true AND LOGIN = true and PASSWORD = 'cassandra';
 
-ALTER KEYSPACE "system_auth" WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'se1': 1};
+// ALTER KEYSPACE "system_auth" WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'se1': 1};
