@@ -44,7 +44,7 @@ services:
       - ./init_keyspace.cql:/schema.cql
     command: /bin/bash -c "sleep 60 && echo loading cassandra keyspace && cqlsh cassandra-seed -f /schema.cql"
 
-  cassandra1:
+  cassandra-1:
     image: cassandra:latest
     volumes:
       - "cassandra_data_1:/var/lib/cassandra"
@@ -57,9 +57,9 @@ services:
     depends_on:
       - cassandra-seed
 #    restart: always
-    container_name: node-1
+    container_name: cassandra-1
 
-  cassandra2:
+  cassandra-2:
     image: cassandra:latest
     volumes:
       - "cassandra_data_2:/var/lib/cassandra"
@@ -72,7 +72,7 @@ services:
     depends_on:
       - cassandra-seed
 #    restart: always
-    container_name: node-2
+    container_name: cassandra-2
 
 volumes:
   cassandra_data_seed:
