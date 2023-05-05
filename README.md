@@ -1,5 +1,8 @@
 # simple-cassandra-docker
 
+# Tutorial deploying cassandra cluster with docker
+https://ralph.blog.imixs.com/2022/10/22/setup-a-public-cassandra-cluster-with-docker/
+
 ## Sample docker compose file to build cassandra cluster
 https://stackoverflow.com/questions/74288965/how-to-connect-to-cassandra-nodes-created-by-docker-compose-via-python-datastax
 
