@@ -1,5 +1,7 @@
 # simple-cassandra-docker
 
+# Apache Cassandra overview
+https://www.geeksforgeeks.org/architecture-of-apache-cassandra/
 # Tutorial deploying cassandra cluster with docker
 https://ralph.blog.imixs.com/2022/10/22/setup-a-public-cassandra-cluster-with-docker/
 
