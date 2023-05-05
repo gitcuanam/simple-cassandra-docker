@@ -2,6 +2,55 @@
 
 ## Problems monitoring cassandra cluster
 
+### Unkown node exits from cluster (checked all 3 nodes, none of them have the ip 192.168.32.4)
+
+Get masks of networks in docker [\[source\]](https://stackoverflow.com/questions/58764152/how-to-get-a-ip-addresses-for-all-docker-containers-from-the-host/58764153#58764153)
+```bash
+for e in $(docker network ls --format '{{.Name}}') ; do docker network inspect $e --format '{{ printf "%-40s" .Name}} {{.IPAM.Config}}'; done
+```
+
+```log
+INFO  [GossipStage:1] 2023-05-05 04:05:51,594 TokenMetadata.java:539 - Updating topology for /192.168.32.3:7000
+INFO  [GossipStage:1] 2023-05-05 04:05:51,596 TokenMetadata.java:539 - Updating topology for /192.168.32.3:7000
+INFO  [GossipStage:1] 2023-05-05 04:05:51,605 Gossiper.java:1362 - InetAddress /192.168.32.3:7000 is now UP
+INFO  [CompactionExecutor:1] 2023-05-05 04:05:51,668 CompactionTask.java:247 - Compacted (1fdbde60-eafa-11ed-97be-ff0bb7f99558) 4 sstables to [/var/lib/cassandra/data/system/peers-37f71aca7dc2383ba70672528af04d4f/nb-25-big,] to level=0.  1.634KiB to 0.541KiB (~33% of original) in 107ms.  Read Throughput = 15.154KiB/s, Write Throughput = 5.018KiB/s, Row Throughput = ~5/s.  8 total partitions merged to 3.  Partition merge counts were {2:2, 4:1, }. Time spent writing keys = 38ms
+INFO  [NonPeriodicTasks:1] 2023-05-05 04:05:51,668 SSTable.java:127 - Deleting sstable: /var/lib/cassandra/data/system/peers-37f71aca7dc2383ba70672528af04d4f/nb-24-big
+INFO  [NonPeriodicTasks:1] 2023-05-05 04:05:51,669 SSTable.java:127 - Deleting sstable: /var/lib/cassandra/data/system/peers-37f71aca7dc2383ba70672528af04d4f/nb-23-big
+INFO  [NonPeriodicTasks:1] 2023-05-05 04:05:51,671 SSTable.java:127 - Deleting sstable: /var/lib/cassandra/data/system/peers-37f71aca7dc2383ba70672528af04d4f/nb-22-big
+INFO  [NonPeriodicTasks:1] 2023-05-05 04:05:51,673 SSTable.java:127 - Deleting sstable: /var/lib/cassandra/data/system/peers-37f71aca7dc2383ba70672528af04d4f/nb-21-big
+INFO  [CompactionExecutor:2] 2023-05-05 04:05:51,686 CompactionTask.java:247 - Compacted (1fe0e770-eafa-11ed-97be-ff0bb7f99558) 4 sstables to [/var/lib/cassandra/data/system/peers_v2-c4325fbb8e5e3bafbd070f9250ed818e/nb-25-big,] to level=0.  1.692KiB to 0.563KiB (~33% of original) in 92ms.  Read Throughput = 18.211KiB/s, Write Throughput = 6.063KiB/s, Row Throughput = ~6/s.  8 total partitions merged to 3.  Partition merge counts were {2:2, 4:1, }. Time spent writing keys = 25ms
+INFO  [NonPeriodicTasks:1] 2023-05-05 04:05:51,689 SSTable.java:127 - Deleting sstable: /var/lib/cassandra/data/system/peers_v2-c4325fbb8e5e3bafbd070f9250ed818e/nb-24-big
+INFO  [NonPeriodicTasks:1] 2023-05-05 04:05:51,690 SSTable.java:127 - Deleting sstable: /var/lib/cassandra/data/system/peers_v2-c4325fbb8e5e3bafbd070f9250ed818e/nb-21-big
+INFO  [NonPeriodicTasks:1] 2023-05-05 04:05:51,692 SSTable.java:127 - Deleting sstable: /var/lib/cassandra/data/system/peers_v2-c4325fbb8e5e3bafbd070f9250ed818e/nb-23-big
+INFO  [NonPeriodicTasks:1] 2023-05-05 04:05:51,693 SSTable.java:127 - Deleting sstable: /var/lib/cassandra/data/system/peers_v2-c4325fbb8e5e3bafbd070f9250ed818e/nb-22-big
+INFO  [Messaging-EventLoop-3-3] 2023-05-05 04:06:21,396 NoSpamLogger.java:105 - /192.168.32.2:7000->/192.168.32.4:7000-URGENT_MESSAGES-[no-channel] failed to connect
+io.netty.channel.ConnectTimeoutException: connection timed out: /192.168.32.4:7000
+        at io.netty.channel.epoll.AbstractEpollChannel$AbstractEpollUnsafe$2.run(AbstractEpollChannel.java:576)
+        at io.netty.util.concurrent.PromiseTask.runTask(PromiseTask.java:98)
+        at io.netty.util.concurrent.ScheduledFutureTask.run(ScheduledFutureTask.java:170)
+        at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:164)
+        at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:472)
+        at io.netty.channel.epoll.EpollEventLoop.run(EpollEventLoop.java:384)
+        at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989)
+        at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+        at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+        at java.base/java.lang.Thread.run(Unknown Source)
+INFO  [GossipTasks:1] 2023-05-05 04:06:53,307 Gossiper.java:1087 - FatClient /192.168.32.4:7000 has been silent for 30000ms, removing from gossip
+INFO  [Messaging-EventLoop-3-3] 2023-05-05 04:06:53,468 NoSpamLogger.java:105 - /192.168.32.2:7000->/192.168.32.4:7000-URGENT_MESSAGES-[no-channel] failed to connect
+io.netty.channel.ConnectTimeoutException: connection timed out: /192.168.32.4:7000
+        at io.netty.channel.epoll.AbstractEpollChannel$AbstractEpollUnsafe$2.run(AbstractEpollChannel.java:576)
+        at io.netty.util.concurrent.PromiseTask.runTask(PromiseTask.java:98)
+        at io.netty.util.concurrent.ScheduledFutureTask.run(ScheduledFutureTask.java:170)
+        at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:164)
+        at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:472)
+        at io.netty.channel.epoll.EpollEventLoop.run(EpollEventLoop.java:384)
+        at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989)
+        at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+        at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+        at java.base/java.lang.Thread.run(Unknown Source)
+```
+
+
 ### Unable to lock JVM memory (ENOMEM)
 Maximum number of memory map areas per process (vm.max_map_count) 65530 is too low, recommended value: 1048575
 
