@@ -20,10 +20,14 @@ import logging
 # _keyspace = _cred.keyspace
 
 
-_CLUSTER = Cluster(contact_points=['node-seed'])
-print(_CLUSTER)
+# _CLUSTER = Cluster(contact_points=['cassandra-seed'])
+# print(_CLUSTER)
 # session = _CLUSTER.connect('chi_url')
 # print(session)
+# user_add_stmt = session.prepare(
+#     "INSERT INTO user (user_name, disabled, email, hashed_password) VALUES (?, TRUE, ?, ?)")  # prepared statement to add user
+# session.execute(user_add_stmt,
+#             ['jjj', 'jjj@gmail.com', 'jjj'])  # replace the pre_stmt with the actual values
 # while True:
 #     try:
 #         session = _CLUSTER.connect('chi_url')

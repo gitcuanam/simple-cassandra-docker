@@ -11,7 +11,7 @@ services:
       context: ./backend
     container_name: backend
     depends_on:
-      - cassandra-seed
+      - cassandra-load-keyspace
     env_file:
       - ./backend/.env
     ports:
@@ -22,8 +22,9 @@ services:
 
   cassandra-seed:
     image: cassandra:latest
-#    ports:
-#      - "9042:9042"
+    ports:
+     - "7000:7000"
+     - "9042:9042"
     volumes:
       - ./init_keyspace.cql:/schema.cql
       - "cassandra_data_seed:/var/lib/cassandra"
@@ -36,7 +37,7 @@ services:
     networks:
       - cassandra-network
 #    restart: always
-    container_name: node-seed
+    container_name: cassandra-seed
     # command: /bin/bash -c "sleep 60 && cqlsh -f /schema.cql -u cassandra -p cassandra"
 
   cassandra-load-keyspace:
