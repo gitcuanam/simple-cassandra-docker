@@ -1,5 +1,12 @@
 # simple-cassandra-docker
 
+## Sample docker compose file to build cassandra cluster
+https://stackoverflow.com/questions/74288965/how-to-connect-to-cassandra-nodes-created-by-docker-compose-via-python-datastax
+
+https://kayaerol84.medium.com/cassandra-cluster-management-with-docker-compose-40265d9de076
+
+https://ralph.blog.imixs.com/2022/10/22/setup-a-public-cassandra-cluster-with-docker/
+
 ## Problems monitoring cassandra cluster
 
 ### Unkown node exits from cluster (checked all 3 nodes, none of them have the ip 192.168.32.4)
