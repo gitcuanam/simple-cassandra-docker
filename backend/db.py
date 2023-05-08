@@ -2,6 +2,7 @@ import time
 from cassandra.cluster import Cluster
 from functools import lru_cache
 from config import Settings
+import uuid
 
 import logging
 
@@ -19,11 +20,35 @@ import logging
 # _password = _cred.db_password
 # _keyspace = _cred.keyspace
 
+# keyspace = 'chi_url'
+keyspace = 'user'
+
 
 _CLUSTER = Cluster(contact_points=['node-seed'])
 print(_CLUSTER)
-# session = _CLUSTER.connect('chi_url')
-# print(session)
+session = _CLUSTER.connect(keyspace)
+print(session)
+
+if (session is not None):
+    # session.execute(
+    #     """
+    #     INSERT INTO user (user_name, disabled, email, name, hased_password, verification_code)
+    #     VALUES (%s, %i, %s, %s, %s, %s)
+    #     """,
+    #     (str(uuid.uuid4()), False, "johnorga@gmail.com", "John O'Reilly", "xxyyzz", "123456")
+    # )
+    
+    session.execute(
+        """
+        INSERT INTO user (user_name, email, full_name, hased_password, verification_code)
+        VALUES (%s, %s, %s, %s, %s)
+        """,
+        (str(uuid.uuid4()), "johnorga@gmail.com", "John O'Reilly", "xxyyzz", "123456")
+    )
+# session.set_keyspace(keyspace)
+# use_statement = 'USE %s', keyspace
+# print(use_statement)
+# session.execute(use_statement)
 # while True:
 #     try:
 #         session = _CLUSTER.connect('chi_url')
