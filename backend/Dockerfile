@@ -22,4 +22,4 @@ ENV ORIGIN2=${ORIGIN2}
 
 EXPOSE 8000
 
-CMD ["python", "db.py"]
+CMD ["python", "main.py"]
