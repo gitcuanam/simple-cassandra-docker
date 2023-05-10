@@ -5,6 +5,25 @@ https://www.geeksforgeeks.org/architecture-of-apache-cassandra/
 # Tutorial deploying cassandra cluster with docker
 https://ralph.blog.imixs.com/2022/10/22/setup-a-public-cassandra-cluster-with-docker/
 
+## Further reading
+https://www.google.com/search?q=the+deadlock+empire&oq=thedeadlockemp&aqs=chrome.1.69i57j0i13i19i512.4766j0j1&sourceid=chrome&ie=UTF-8 | the deadlock empire - Tìm trên Google
+https://medium.com/better-advice/10-things-to-do-in-the-evening-instead-of-watching-netflix-4e270e9dd6b9 | 10 Things To Do In The Evening Instead Of Watching Netflix | by Aleid ter Weel | Better Advice | Medium
+https://stackoverflow.com/questions/92928/time-sleep-sleeps-thread-or-process | python - time.sleep -- sleeps thread or process? - Stack Overflow
+https://www.google.com/search?q=cassandra+Increase+RLIMIT_MEMLOCK&sxsrf=APwXEddPcpcBPPSUJ_JQ5_JuU0uc-vfGIw%3A1683705014335&ei=tkxbZJmWFJri-Abm-rGYDA&ved=0ahUKEwiZyaT6oer-AhUaMd4KHWZ9DMMQ4dUDCA8&uact=5&oq=cassandra+Increase+RLIMIT_MEMLOCK&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQAzIGCAAQCBAeMgYIABAIEB46CggAEEcQ1gQQsAM6BwgjELACECc6CQgAEA0QExCABDoKCAAQBRAeEA0QEzoICAAQCBAHEB5KBAhBGABQswhYuxZg-htoAXABeACAAWyIAZwHkgEDNi40mAEAoAEByAEIwAEB&sclient=gws-wiz-serp | cassandra Increase RLIMIT_MEMLOCK - Tìm trên Google
+https://stackoverflow.com/questions/55946385/multiple-cassandra-node-goes-down | Multiple Cassandra node goes down - Stack Overflow
+https://stackoverflow.com/questions/34670506/unable-to-start-cassandra-with-this-errors | Unable to start cassandra with this errors - Stack Overflow
+https://stackoverflow.com/questions/62356714/cassandra-add-node-problem-failed-error-cannot-allocate-memory-errno-12 | jvm - Cassandra add node problem, failed; error='Cannot allocate memory' (errno=12) - Stack Overflow
+https://stackoverflow.com/questions/26724662/cannot-achieve-consistency-level-one-info-required-replicas-1-alive-repl | cassandra - Cannot achieve consistency level ONE: info={ 'required_replicas': 1, 'alive_replicas': 0, 'consistency': 1} - Stack Overflow
+https://stackoverflow.com/questions/2330562/do-i-absolutely-need-a-minimum-of-3-nodes-servers-for-a-cassandra-cluster-or-wil | nosql - Do I absolutely need a minimum of 3 nodes/servers for a Cassandra cluster or will 2 suffice? - Stack Overflow
+https://www.google.com/search?q=1gb+ram+cassandra&oq=1gb+ram+cassandra&aqs=chrome..69i57j33i160.6832j0j1&sourceid=chrome&ie=UTF-8 | 1gb ram cassandra - Tìm trên Google
+https://medium.com/knerd/simplifying-cassandra-heap-size-allocation-e39628efd7e6 | Simplifying Cassandra Heap Size Allocation | by Knewton | Knerd | Medium
+https://www.google.com/search?q=cassandra+cluster+docker+compose+for+low+memory&sxsrf=APwXEddaieaah9hMmAhgIB0sVOTcMjufjA%3A1683710672785&ei=0GJbZM_JL5ap-QaM3oGABQ&ved=0ahUKEwjP8biEt-r-AhWWVN4KHQxvAFAQ4dUDCA8&uact=5&oq=cassandra+cluster+docker+compose+for+low+memory&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQAzIFCAAQogQ6CggAEEcQ1gQQsAM6BAgjECc6CAghEKABEMMEOgoIIRCgARDDBBAKSgQIQRgAUJ9RWI5rYM1uaANwAXgAgAFyiAGuC5IBBDEwLjaYAQCgAQHIAQTAAQE&sclient=gws-wiz-serp | cassandra cluster docker compose for low memory - Tìm trên Google
+https://stackoverflow.com/questions/9994788/cassandra-running-out-of-memory-heap-space | amazon ec2 - Cassandra running out of memory (heap space) - Stack Overflow
+https://stackoverflow.com/questions/17046341/cassandra-running-out-of-memory-for-cql-queries | Cassandra running out of memory for cql queries - Stack Overflow
+https://stackoverflow.com/questions/69689801/how-to-find-cassandra-startup-failure-cause | docker compose - How to find Cassandra startup failure cause - Stack Overflow
+https://user.cassandra.apache.narkive.com/JghQ4Nbp/how-can-i-make-cassandra-stable-in-a-2gb-ram-node-environment#post4 | How can I make Cassandra stable in a 2GB RAM node environment ?
+https://hashnode.knulst.de/use-nestjs-mongodb-and-docker-to-create-an-url-shortener | Use NestJS, MongoDB and Docker to Create an URL Shortener
+
 ## Sample docker compose file to build cassandra cluster
 https://stackoverflow.com/questions/74288965/how-to-connect-to-cassandra-nodes-created-by-docker-compose-via-python-datastax
 
@@ -21,7 +40,52 @@ environment:
 ```
 
 Trade-offs between internal memory and external memory [\[source\]](https://user.cassandra.apache.narkive.com/JghQ4Nbp/how-can-i-make-cassandra-stable-in-a-2gb-ram-node-environment#post4)
+
 ![narkive.com](./imgs/narkive.com.png)
+
+Further reading
+
+1gb ram cassandra
+
+How many cassandra nodes can I run in docker container? [\[source\]](https://stackoverflow.com/questions/49552103/how-many-cassandra-nodes-can-i-run-in-docker-container)
+```text
+You could split the RAM usage by setting MAX_HEAP_SIZE (and HEAP_NEWSIZE) to split your 12GB amongst your cassandra process, yet they will all compete for the same CPU and IO available. You will better of running just one Cassandra service inside your container.
+```
+
+Currently, cassandra doesn't work on a node with 1GB total RAM. [\[source\]](https://github.com/reidmv/reidmv-puppet_data_service/issues/18)
+```text
+This means that in a hydra environment, Cassandra needs to run on the master. For experimenting with different scenarios it would be good if Cassandra would function on a 1GB machine.
+Reduce default memory settings to prevent OOM kills on Hydra PM #21
+```
+
+When Cassandra is running almost all RAM is consumed, why? [\[source\]](https://stackoverflow.com/questions/44676873/when-cassandra-is-running-almost-all-ram-is-consumed-why)
+```text
+In linux in general cached memory as your 23g is just really fine. This memory is used as filesystem cache and so on - not by cassandra itself. Linux systems tend to use all available memory.
+
+This helps to speed up your system in many ways to prevent disk reads.
+```
+
+Why and How is Cassandra using all my ram ? [\[source\]](https://lists.apache.org/thread/ztgnpmwvq7g5syso4lclqxldfoko7k1r)
+```text
+you define the max size of your heap (-Xmx), but you do not define the max
+size of your offheap (MaxMetaspaceSize for jdk 8, PermSize for jdk7), so
+you could occupy all of the memory on the instance. your system killed the
+process to preserve itself.
+```
+
+Memory requirements for Cassandra reaper [\[source\]](https://lists.apache.org/thread/8j8m2w0v6qh47bld9lpd02j4bs19s2qy)
+```text
+If you just want to test it out on a machine with only 8GB, you can update
+the cassandra-reaper script to only use 1GB by setting -Xms1G and -Xmx1G
+but you won't be able to do much with it. It might also be necessary to
+reduce the heap allocated to Cassandra down to 2GB so there's enough RAM
+left for the operating system.
+
+For test and production environments, I recommend deploying Reaper on a
+dedicated machine so it doesn't affect the performance of whatever cluster
+it is connecting to. Reaper needs a minimum of 2 vCPUs + 2GB of RAM and
+this works in most cases.
+```
 
 ## Problems monitoring cassandra cluster
 
