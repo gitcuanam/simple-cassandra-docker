@@ -12,6 +12,14 @@ https://kayaerol84.medium.com/cassandra-cluster-management-with-docker-compose-4
 
 https://ralph.blog.imixs.com/2022/10/22/setup-a-public-cassandra-cluster-with-docker/
 
+## Limit memory usage for Cassandra
+How to set heap memory in cassandra on docker [\[source\]](https://stackoverflow.com/questions/48729599/how-to-set-heap-memory-in-cassandra-on-docker/61029218#61029218)
+```yaml
+environment:
+  - HEAP_NEWSIZE=128M
+  - MAX_HEAP_SIZE=2048M
+```
+
 ## Problems monitoring cassandra cluster
 
 ### Unkown node exits from cluster (checked all 3 nodes, none of them have the ip 192.168.32.4)
