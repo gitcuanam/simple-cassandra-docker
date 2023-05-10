@@ -31,6 +31,8 @@ services:
 #      needed for setting up custom cluster name
       - "CASSANDRA_DC=se1"
       - "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
+      - "MAX_HEAP_SIZE=1G"
+      - "HEAP_NEWSIZE=100M"
 #    restart: always
     container_name: node-seed
     # command: /bin/bash -c "sleep 60 && cqlsh -f /schema.cql"
@@ -54,6 +56,8 @@ services:
 #      needed for setting up custom cluster name
       - "CASSANDRA_DC=se1"
       - "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
+      - "MAX_HEAP_SIZE=1G"
+      - "HEAP_NEWSIZE=100M"
     depends_on:
       - cassandra-seed
 #    restart: always
@@ -69,6 +73,8 @@ services:
 #      needed for setting up custom cluster name
       - "CASSANDRA_DC=se1"
       - "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
+      - "MAX_HEAP_SIZE=1G"
+      - "HEAP_NEWSIZE=100M"
     depends_on:
       - cassandra-seed
 #    restart: always
