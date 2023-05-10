@@ -20,6 +20,9 @@ environment:
   - MAX_HEAP_SIZE=2048M
 ```
 
+Trade-offs between internal memory and external memory [\[source\]](https://user.cassandra.apache.narkive.com/JghQ4Nbp/how-can-i-make-cassandra-stable-in-a-2gb-ram-node-environment#post4)
+![narkive.com](./imgs/narkive.com.png)
+
 ## Problems monitoring cassandra cluster
 
 ### Unkown node exits from cluster (checked all 3 nodes, none of them have the ip 192.168.32.4)
