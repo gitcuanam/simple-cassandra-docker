@@ -9,6 +9,7 @@ services:
   backend:
     build:
       context: ./backend
+    image: "backend:latest" # avoid anonymous images to clean up # https://stackoverflow.com/questions/49316462/how-to-update-existing-images-with-docker-compose/49552342#49552342
     container_name: backend
     depends_on:
       - cassandra-load-keyspace
@@ -16,7 +17,7 @@ services:
       - ./backend/.env
     ports:
     - "8000:8000"
-    restart: always
+    restart: no
 
   cassandra-seed:
     image: cassandra:latest
