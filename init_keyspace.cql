@@ -71,6 +71,8 @@ CREATE INDEX IF NOT EXISTS email ON chi_url.user (email);
 
 CREATE KEYSPACE IF NOT EXISTS user  WITH replication = {'class': 'NetworkTopologyStrategy', 'se1': '1'}  AND durable_writes = true;
 
+DROP TABLE IF EXISTS user.user;
+
 CREATE TABLE IF NOT EXISTS user.user (
     user_name text PRIMARY KEY,
     email text,
