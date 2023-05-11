@@ -5,6 +5,10 @@
 ```bash
 docker compose down --remove-orphans && docker volume prune -f && docker compose build --no-cache && docker compose up -d --force-recreate
 ```
+- build with cache
+```bash
+docker compose down --remove-orphans && docker volume prune -f && docker compose build  && docker compose up -d --force-recreate
+```
 - build backend code only
 ```bash
 docker build -t backend:latest backend/ && docker compose up -d
