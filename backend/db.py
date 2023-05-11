@@ -1,9 +1,12 @@
 import time
-from cassandra.cluster import Cluster, NoHostAvailable
+from cassandra.cluster import Cluster, NoHostAvailable, UnresolvableContactPoints
 from functools import lru_cache
 from config import Settings
 import uuid
 
+import cassandra
+
+import sys
 import logging
 
 # @lru_cache()
@@ -32,7 +35,9 @@ def connect():
             # logging.basicConfig(handlers=[logging.FileHandler(filename="../logs/main.log", encoding="utf-8")], level=logging.ERROR)
             if _CLUSTER is None:
                 print('connecting cluster')
-                _CLUSTER = Cluster(contact_points=['node-seed'],load_balancing_policy=None)
+                _CLUSTER = get_cluster(connect_cluster)
+                print('connecting cluster')
+                
             if session is None:
                 print('connecting session')
                 session = _CLUSTER.connect(keyspace)
@@ -60,7 +65,7 @@ def connect():
                     (str(uuid.uuid4()), "johnorga@gmail.com", "John O'Reilly", "xxyyzz", "123456")
                 )
             break
-        except NoHostAvailable as e:
+        except (UnresolvableContactPoints, NoHostAvailable) as e:
             pass
             # print(e)
         except Exception as e1:
@@ -69,3 +74,33 @@ def connect():
         finally:
             print('exchihi')
             time.sleep(5)  # wait before reconnecting
+
+def connect_cluster():
+    return Cluster(contact_points=['node-seed'],load_balancing_policy=None)
+
+def get_cluster(connect_statement, keyspace, wait_timeout=300, quiet=False):
+    start_at = time.time()
+    wait_println_counter = 0
+
+    while time.time() - start_at < wait_timeout:
+        try:
+            print(connect_statement)
+            cluster = connect_statement()
+            # return cluster.connect()
+            return cluster
+        except (cassandra.cluster.NoHostAvailable, cassandra.UnresolvableContactPoints) as e:
+            if not quiet:
+                print(repr(e))
+            wait_println_counter += 3
+            if wait_println_counter == 3:
+                if not quiet:
+                    print("Waiting 30 more seconds...")
+                wait_println_counter = 0
+            time.sleep(10)
+        # else:
+        #     sys.exit(0)
+    else:
+        if not quiet:
+            print("Waiting time exceeded, aborting...")
+        sys.exit(1)
+
