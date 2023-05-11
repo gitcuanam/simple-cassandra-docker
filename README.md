@@ -1,5 +1,19 @@
 # simple-cassandra-docker
 
+## Usage
+- build without cache
+```bash
+docker compose down --remove-orphans && docker volume prune -f && docker compose build --no-cache && docker compose up -d --force-recreate
+```
+- build backend code only
+```bash
+docker build -t backend:latest backend/ && docker compose up -d
+```
+- check health
+```bash
+docker logs backend
+```
+
 # Apache Cassandra overview
 https://www.geeksforgeeks.org/architecture-of-apache-cassandra/
 # Tutorial deploying cassandra cluster with docker
