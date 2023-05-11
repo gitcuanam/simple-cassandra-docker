@@ -1,5 +1,5 @@
 import time
-from cassandra.cluster import Cluster, NoHostAvailable, UnresolvableContactPoints
+from cassandra.cluster import Cluster, NoHostAvailable, UnresolvableContactPoints, DriverException
 from functools import lru_cache
 from config import Settings
 import uuid
@@ -8,6 +8,7 @@ import cassandra
 
 import sys
 import logging
+from retry import retry
 
 # @lru_cache()
 # def db_cred():
@@ -35,8 +36,9 @@ def connect():
             # logging.basicConfig(handlers=[logging.FileHandler(filename="../logs/main.log", encoding="utf-8")], level=logging.ERROR)
             if _CLUSTER is None:
                 print('connecting cluster')
-                _CLUSTER = get_cluster(connect_cluster)
-                print('connecting cluster')
+                # _CLUSTER = Cluster(contact_points=['node-seed'],load_balancing_policy=None)
+                _CLUSTER = connect_cluster2()
+                print('connecting cluster success')
                 
             if session is None:
                 print('connecting session')
@@ -65,15 +67,22 @@ def connect():
                     (str(uuid.uuid4()), "johnorga@gmail.com", "John O'Reilly", "xxyyzz", "123456")
                 )
             break
-        except (UnresolvableContactPoints, NoHostAvailable) as e:
-            pass
-            # print(e)
-        except Exception as e1:
-            pass
-            # print(e)
-        finally:
+        except (UnresolvableContactPoints, NoHostAvailable, DriverException) as e:
             print('exchihi')
             time.sleep(5)  # wait before reconnecting
+            # print(e)
+            pass
+        else:
+            print('exchihi')
+            time.sleep(5)  # wait before reconnecting
+            continue
+        finally:
+            pass
+
+
+@retry(Exception, delay=5)
+def connect_cluster2():
+    return Cluster(contact_points=['node-seed'],load_balancing_policy=None)
 
 def connect_cluster():
     return Cluster(contact_points=['node-seed'],load_balancing_policy=None)
