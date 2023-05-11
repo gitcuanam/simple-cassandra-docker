@@ -3,6 +3,8 @@ simple-cassandra-docker/
 # docker bind mount
 volumes/
 
+cassandra/data
+
 #official python gitignore
 # Byte-compiled / optimized / DLL files
 __pycache__/

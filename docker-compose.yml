@@ -18,6 +18,8 @@ services:
     ports:
     - "8000:8000"
     restart: no
+    networks:
+      - cassandra-network
 
   cassandra-seed:
     image: cassandra:latest
@@ -34,6 +36,8 @@ services:
       - "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
       - "MAX_HEAP_SIZE=1G"
       - "HEAP_NEWSIZE=100M"
+    networks:
+      - cassandra-network
 #    restart: always
     container_name: node-seed
     # command: /bin/bash -c "sleep 60 && cqlsh -f /schema.cql"
@@ -45,6 +49,8 @@ services:
       - cassandra-seed
     volumes:
       - ./init_keyspace.cql:/schema.cql
+    networks:
+      - cassandra-network
     command: /bin/bash -c "sleep 60 && echo loading cassandra keyspace && cqlsh cassandra-seed -f /schema.cql"
 
   cassandra-1:
@@ -61,6 +67,8 @@ services:
       - "HEAP_NEWSIZE=100M"
     depends_on:
       - cassandra-seed
+    networks:
+      - cassandra-network
 #    restart: always
     container_name: cassandra-1
 
@@ -78,6 +86,8 @@ services:
       - "HEAP_NEWSIZE=100M"
     depends_on:
       - cassandra-seed
+    networks:
+      - cassandra-network
 #    restart: always
     container_name: cassandra-2
 
@@ -85,3 +95,6 @@ volumes:
   cassandra_data_seed:
   cassandra_data_1:
   cassandra_data_2:
+
+networks:
+  cassandra-network:
